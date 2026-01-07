@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Post New Offer - Food Safety & Compliance Protocol{% endblock %}
+
+{% block content %}
+    <div class="container add-offer-page" role="form" aria-labelledby="add-offer-heading">
+        <h2 id="add-offer-heading" tabindex="0">➕ Post Your Food Surplus (Strict Quality and Safety Protocol)</h2>
+        
+        <div class="info-box info-alert" role="alert" aria-live="assertive">
+            <p><strong>⚠️ CRITICAL FOOD SAFETY ALERT:</strong> Your liability is engaged. Only products stored and handled according to **strict hygiene standards (HACCP)** and with a valid **Use-By Date (UBD)** are accepted. **Products must be ready for immediate pickup.**</p>
+            <p>Posting false or misleading information (e.g., selling spoiled products, incorrect allergens) will lead to the **immediate and permanent suspension** of your EcoFood DZ account. We maintain zero tolerance to ensure public safety.</p>
+            <p>Please double-check the **Allergen** information before submission.</p>
+        </div>
+
+        {% if error %}
+            <p class="error-message" role="alert" tabindex="0">{{ error }}</p>
+        {% endif %}
+
+        <form action="{{ url_for('add') }}" method="POST" class="form-container" id="add-offer-form" aria-describedby="add-offer-heading">
+            
+            <fieldset>
+                <legend>Essential Offer Details and Pickup Information</legend>
+                
+                <label for="restaurant">Establishment/Individual Name (Pickup Point):</label>
+                <input type="text" id="restaurant" name="restaurant" placeholder="Ex: 'The Good Bread Bakery' (Algiers Center) or Your Name" required aria-required="true" maxlength="100">
+                <small class="help-text">Indicate the full name and general locality of the pickup point for identification. **Required field for traceability.**</small>
+                
+                <label for="plat">Dish Name, Composition, and Detailed Lot Description:</label>
+                <input type="text" id="plat" name="plat" placeholder="Ex: Lot of 12 fresh croissants (Allergens: Lactose, Gluten)" required aria-required="true" maxlength="255">
+                <small class="help-text">**Be highly precise:** Include quantity, estimated weight, temperature state (fresh/frozen), and list all major **allergens** (milk, nuts, eggs, gluten, soy...).</small>
+                
+                <label for="type">Offer Type (Determines Commercial/Charity Aspect):</label>
+                <select name="type" id="type" required aria-required="true">
+                    <option value="Sale">Reduced Price Sale (Commercial Anti-Waste)</option>
+                    <option value="Donation">Free Donation (Charity/Solidarity)</option>
+                </select>
+                <small class="help-text">Select 'Donation' if the product is given free of charge. This selection automatically locks the Price field to 0 DA.</small>
+            </fieldset>
+
+            <fieldset>
+                <legend>Transaction and Media Information (Optional Enhancements)</legend>
+
+                <label for="prix">Selling Price (DA) :</label>
+                <input type="number" id="prix" name="prix" placeholder="Enter 0 for a Free Donation" required min="0" value="0" aria-describedby="prix-help">
+                <small class="help-text" id="prix-help">If 'Donation' is selected, this field is automatically set to **0 DA**. Otherwise, enter the reduced selling price. Only positive integers are allowed.</small>
+
+                <label for="image">Product Image Link (Optional HTTPS URL):</label>
+                <input type="url" id="image" name="image" placeholder="Ex: https://yourwebsite.com/high-res-photo.jpg">
+                <small class="help-text">A clear, high-quality photo significantly increases the successful pickup rate. Please use a direct HTTPS link for security.</small>
+            </fieldset>
+
+            <button type="submit" class="btn primary-btn large-btn" id="submit-button" aria-controls="add-offer-form">Post Offer and Initiate Solidarity Action</button>
+        </form>
+
+        <a href="{{ url_for('offers') }}" class="back" role="button">← Cancel and Return to Offer List</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('add-offer-form');
+            const priceInput = document.getElementById('prix');
+            const typeSelect = document.getElementById('type');
+            
+            document.getElementById('restaurant').focus(); // Accessibility focus
+
+            function validatePriceType() {
+                const isDonation = typeSelect.value === 'Donation';
+                const price = parseInt(priceInput.value);
+                const isPriceValid = price >= 0 && !isNaN(price);
+
+                if (!isPriceValid) {
+                    alert('Error: Price must be a positive integer or zero.');
+                    priceInput.focus();
+                    return false;
+                }
+
+                if (isDonation && price > 0) {
+                    alert('Logical Error: If the offer type is "Donation", the price must be 0 DA. Please correct the price.');
+                    priceInput.focus();
+                    return false;
+                }
+                
+                return true;
+            }
+
+            form.addEventListener('submit', function(event) {
+                if (!validatePriceType()) {
+                    event.preventDefault(); 
+                    console.error("Client validation failed: Price/Type inconsistency detected. Blocking submission.");
+                } else {
+                    console.info("Client validation successful. Sending data securely to Flask server...");
+                }
+            });
+
+            // Dynamic logic to lock price if Donation is selected
+            typeSelect.addEventListener('change', function() {
+                const isDonation = typeSelect.value === 'Donation';
+                
+                if (isDonation) {
+                    priceInput.value = 0;
+                    priceInput.setAttribute('readonly', 'readonly');
+                    priceInput.style.backgroundColor = '#f0fff4'; 
+                    priceInput.style.border = '1px solid #1e7e34'; 
+                } else {
+                    priceInput.removeAttribute('readonly');
+                    priceInput.style.backgroundColor = 'white';
+                    priceInput.style.border = '1px solid #ccc';
+                    if (parseInt(priceInput.value) === 0) {
+                        priceInput.value = ''; 
+                    }
+                }
+            });
+            
+            typeSelect.dispatchEvent(new Event('change'));
+        });
+    </script>
+    {% endblock %}

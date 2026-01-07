@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Partner Access{% endblock %}
+
+{% block content %}
+    <div class="container" style="max-width: 450px; margin-top: 80px;">
+        <h2 style="color: var(--color-primary); text-align: center; margin-bottom: 25px;">🔐 Partner Login</h2>
+        
+        {% if error %}
+            <!-- Affiche l'erreur si les identifiants sont invalides -->
+            <p class="error-message">{{ error }}</p>
+        {% endif %}
+
+        <!-- Affiche les messages du système (comme "Please log in to access this page.") -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p class="info-message {{ category }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <form action="{{ url_for('login') }}" method="POST" class="form-container">
+            
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="partner" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="password123" required>
+
+            <button type="submit" class="btn primary-btn large-btn">Login to Post Offer</button>
+        </form>
+        
+        <p style="text-align: center; margin-top: 25px;">
+            <small>Access is strictly restricted to verified EcoFood DZ partners for security.</small>
+        </p>
+    </div>
+    
+    <!-- CSS for Flash Messages (Added here for immediate functional consistency) -->
+    <style>
+        .info-message {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+    </style>
+{% endblock %}

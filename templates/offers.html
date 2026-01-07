@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}EcoFoodDZ - Complete List of Available Food Offers (Sale & Donation) - Real Time Inventory{% endblock %}
+
+{% block head_extra %}
+    <meta name="description" content="Browse the complete, real-time list of fresh meal and surplus food offers available for reduced sale or free donation near you. Use our advanced filters to sort by type and locality for rapid pickup.">
+    <meta name="keywords" content="offers, food surplus list, food rescue inventory, real-time offers, discounted meals, free food Algeria">
+    
+    <style>
+        /* Specific inline styles for tables and controls (Translated) */
+        .offers-table caption {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #1e7e34;
+            font-weight: 600;
+        }
+        .offers-table th {
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .action-buttons a, .action-buttons button {
+            transition: all 0.2s;
+            margin: 3px;
+            font-size: 0.85em;
+        }
+        .no-offers {
+            background-color: #fff3cd; 
+            color: #856404; 
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #ffeeba;
+            font-size: 1.15em;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-top: 30px;
+        }
+        .status-sold-out-text {
+            color: #e74c3c;
+            font-weight: bold;
+            display: inline-block;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        /* End of inline styles */
+    </style>
+    {% endblock %}
+
+{% block content %}
+    <h1 tabindex="0">🍽️ Complete List of Available Anti-Waste Food Offers</h1>
+
+    <section class="container controls-bar" role="search" aria-label="Tools for searching and filtering food offers">
+        <form action="{{ url_for('search') }}" method="GET" class="search-bar">
+            <label for="search-query" class="visually-hidden">Search by Restaurant or Dish</label>
+            <input type="text" id="search-query" name="q" placeholder="Search by Restaurant, Dish, or Locality..." required aria-required="true">
+            <button type="submit" class="btn search-btn" aria-label="Launch search">🔎 Search</button>
+        </form>
+
+        <div class="filter-buttons" role="group" aria-label="Filter offers by transaction type">
+            <a href="{{ url_for('offers') }}" class="btn filter-all" role="button" title="View all available offers without filtering">All Offers</a>
+            <a href="{{ url_for('filter_offers', category='Sale') }}" class="btn filter-sale" role="button" title="View offers available for a reduced price sale">Sale (Reduced Price)</a>
+            <a href="{{ url_for('filter_offers', category='Donation') }}" class="btn filter-donation" role="button" title="View offers available for free donation">Donation (Free)</a>
+        </div>
+    </section>
+    
+    <div class="container">
+        {% if offers %}
+        <table class="offers-table" role="grid" aria-live="polite" aria-describedby="offers-description">
+            <caption id="offers-description">Detailed table of food surplus available for immediate collection across all partnered regions. Data updated dynamically via Flask backend.</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Restaurant/Pickup Point</th>
+                    <th scope="col">Dish / Product (Allergens)</th>
+                    <th scope="col">Price (DA)</th>
+                    <th scope="col">Transaction Type</th>
+                    <th scope="col">Current Status</th>
+                    <th scope="col">Quick Actions (Management)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in offers %}
+                <tr class="offer-row status-{{ row.status | lower | replace(' ', '-') }}" role="row">
+                    <td data-label="Restaurant/Pickup Point">{{ row.restaurant }}</td>
+                    <td data-label="Dish / Product">{{ row.plat }}</td>
+                    <td data-label="Price" class="price-col">
+                        {% if row.prix == '0' or row.prix == '00' %}
+                            **FREE** (DONATION)
+                        {% else %}
+                            {{ row.prix }} DA
+                        {% endif %}
+                    </td>
+                    <td data-label="Type">{{ row.type }}</td>
+                    <td data-label="Status" class="status-badge">{{ row.status }}</td>
+                    
+                    <td data-label="Actions" class="action-buttons" role="toolbar">
+                        <a href="{{ url_for('edit', offer_id=row.id) }}" class="btn edit-btn" title="Edit this offer (ID: {{ row.id }})" role="button" aria-controls="offers-table">✏️ Edit</a>
+
+                        {% if row.status == "Available" %}
+                            <form action="{{ url_for('sold', offer_id=row.id) }}" method="POST" style="display:inline;">
+                                <button type="submit" class="btn sold-btn" title="Mark as Sold or Collected" aria-label="Mark offer ID {{ row.id }} as sold/collected">🚫 Sold</button>
+                            </form>
+                        {% else %}
+                            <span class="status-sold-out-text">Action Completed</span>
+                        {% endif %}
+                        
+                        <form action="{{ url_for('delete', offer_id=row.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('CONFIRMATION: Are you absolutely sure you want to permanently delete offer ID {{ row.id }}? This action is irreversible and final.');">
+                            <button type="submit" class="btn delete-btn" title="Permanently delete offer" aria-label="Delete offer ID {{ row.id }}">🗑️ Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p class="no-offers" role="alert" aria-live="assertive">
+                💔 Sorry, no offers were found matching your current criteria. The inventory is currently empty or your filter returned no results. <br>
+                **Recommended Action:** Try adjusting your search filters or be the first to <a href="{{ url_for('add') }}">post a new offer</a> to support the community! We need active participation to fight food waste.
+            </p>
+        {% endif %}
+    </div>
+    
+    {% endblock %}

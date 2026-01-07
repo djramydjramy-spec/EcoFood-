@@ -1,0 +1,3 @@
+id,username,password_hash
+1,partner,pbkdf2:sha256:1000000$2COxdkEXLQWOKlCC$b0a82001ddec84e48bbf83eba92843e09298ad15bade855072a4a23360a3aa82
+2,hakim,pbkdf2:sha256:1000000$pTzWbNvDvDGDaBCS$d8ce85e4f60ed78f595a79bebf971631d5826ee38615316c1477e309659ef782

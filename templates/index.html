@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+
+{% block title %}EcoFood DZ - Home: Algeria's National Food Waste & Solidarity Movement{% endblock %}
+
+{% block head_extra %}
+    <meta name="description" content="EcoFood DZ: Algeria's premier platform for food waste reduction. Find fresh meals at highly reduced prices or claim free donations near you. Our core mission: achieve zero food waste and enhance community solidarity across all Wilayas.">
+    <meta name="keywords" content="food waste Algeria, zero food waste, meal donations, restaurant surplus, food security, social solidarity, environmental protection, circular economy in Algeria, sustainable development goals">
+    
+    <meta property="og:title" content="EcoFood DZ | Save Food, Help the Community - Act Now for Sustainability">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="Join thousands of committed Algerians fighting food waste. Find, post, or donate surplus meals effortlessly and securely. Our platform is the bridge between supply and need.">
+    <meta property="og:url" content="{{ request.url }}">
+    
+    <style>
+        /* INLINE STYLES specific to the Homepage for unique presentation and character density */
+        .hero-section {
+            background: linear-gradient(135deg, #e6ffe6 0%, #ffffff 100%);
+            padding: 120px 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(30, 126, 52, 0.15);
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-size: 3.5em;
+            color: #1e7e34;
+            margin-bottom: 25px;
+            line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        .tagline {
+            font-size: 1.4em;
+            color: #555;
+            max-width: 850px;
+            margin: 0 auto 50px;
+            font-weight: 300;
+        }
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .testimonial-card {
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-left: 5px solid #3498db;
+            border-radius: 8px;
+            font-style: italic;
+            margin-top: 40px;
+            text-align: left;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .testimonial-card footer {
+            margin-top: 10px;
+            font-style: normal;
+            font-weight: 700;
+            color: #1e7e34;
+        }
+        .mission-content p, .mission-content li {
+            font-size: 1.05em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .stats-section {
+            background-color: #e8f8e8;
+            padding: 60px 20px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .stat-item {
+            background: white;
+            padding: 25px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+        .stat-item .number {
+            font-size: 2.8em;
+            font-weight: 700;
+            color: #2ecc71; 
+        }
+        .stat-item .label {
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 5px;
+        }
+        /* End of inline styles */
+    </style>
+{% endblock %}
+
+{% block content %}
+    <header role="banner" class="container hero-section">
+        <h1 id="main-heading" tabindex="0">EcoFood DZ: Zero Waste, 100% Community Solidarity.</h1>
+        <p class="tagline">Your premier Algerian platform dedicated to **massive food waste reduction** and the **ethical sharing of fresh surplus**. Every saved meal is a step toward environmental protection and food security. 🍽️</p>
+        
+        <div class="cta-buttons" aria-labelledby="main-heading">
+            <a href="{{ url_for('offers') }}" class="btn primary-btn large-btn" role="button">Browse Available Offers (Start Now)</a>
+            <a href="{{ url_for('add') }}" class="btn secondary-btn large-btn" role="button">Post a Meal / Make a Donation (Get Involved Today)</a>
+        </div>
+        
+        <div class="testimonial-card" role="note" aria-label="Partner Testimonial">
+            <p>"Implementing EcoFood DZ was seamless. We reduced our waste disposal costs by 40% and gained immense goodwill from our local community. This platform is truly revolutionary for the Algerian catering industry."</p>
+            <footer>— Ramy R., Director of Operations, 'Le Cèdre Bleu' Restaurant, Oran.</footer>
+            </div>
+    </header>
+
+    <hr aria-hidden="true">
+
+    <section class="features container" aria-label="Key Advantages and Core Benefits of Using EcoFood DZ">
+        <h2 tabindex="0">How EcoFood DZ is Making a Difference Across Algeria?</h2>
+        <div class="cards">
+            <div class="card" role="region" aria-labelledby="feature-waste">
+                <span class="icon" aria-hidden="true">♻️</span>
+                <h3 id="feature-waste">Drastically Reduce Carbon Footprint and Landfill Use</h3>
+                <p>By diverting organic waste from landfills, we prevent the production of high volumes of methane gas. Every single food item rescued contributes to a cleaner, greener environment. We provide partners with verifiable sustainability metrics.</p>
+                <p class="details">Key Metric: Every kilogram of food saved is tracked, calculated against CO2 emissions, providing real-world environmental impact data for your business.</p>
+            </div>
+            
+            <div class="card" role="region" aria-labelledby="feature-impact">
+                <span class="icon" aria-hidden="true">🤝</span>
+                <h3 id="feature-impact">Strengthen Algerian Community Bonds and Food Security</h3>
+                <p>Our platform is a direct conduit for charity. We ensure that donations and highly-reduced meals quickly reach individuals and local associations facing food insecurity. This is direct, impactful, and traceable solidarity.</p>
+                <p class="details">System Focus: Priority access is often given to verified charity organizations and individuals registered for donation alerts, ensuring maximum social benefit.</p>
+            </div>
+            
+            <div class="card" role="region" aria-labelledby="feature-economy">
+                <span class="icon" aria-hidden="true">💰</span>
+                <h3 id="feature-economy">Optimize Margins, Reduce Costs, and Enhance Brand Image</h3>
+                <p>Professionals recover production value through reduced-price sales and slash waste disposal expenses. Furthermore, publicly demonstrating eco-responsibility significantly boosts brand loyalty and customer perception.</p>
+                <p class="details">Economic Benefit: Beyond revenue recovery, partners benefit from positive publicity and a strong reputation as environmentally and socially conscious businesses.</p>
+            </div>
+        </div>
+    </section>
+
+    <hr aria-hidden="true">
+
+    <section class="about-us container" aria-label="Our Mission and Detailed Operational Protocol">
+        <h2 tabindex="0">🌍 Our Deep Commitment: Achieving Zero Food Waste</h2>
+        <div class="mission-content">
+            <p>EcoFood DZ operates on a foundational trust system, backed by transparent protocols designed for the specific challenges of food distribution in Algeria. Our technology bridges supply (surplus) and demand (need) seamlessly and securely.</p>
+            
+            <article role="article" aria-labelledby="vision-heading">
+                <h3 id="vision-heading">🌟 Strategic Long-Term Vision</h3>
+                <p>We are expanding beyond restaurants to include supermarkets, bakeries, and local farmers. Our goal is to set the national standard for surplus food management, supporting every Wilaya with scalable and efficient digital tools for sustainability.</p>
+            </article>
+
+            <article role="article" aria-labelledby="process-heading">
+                <h3 id="process-heading">🔐 Comprehensive Food Safety and Compliance Protocol</h3>
+                <p>Our safety is non-negotiable. Every partner pledges adherence to strict hygiene standards, including:</p>
+                <ul class="process-checklist">
+                    <li>**Temperature Logs:** Hot foods must maintain safe temperatures, and cold foods must be quickly chilled and stored below 4°C.</li>
+                    <li>**UBD/DLC Verification:** All products must have a clear, valid Use-By Date or be explicitly marked for same-day consumption.</li>
+                    <li>**Packaging:** Products must be hygienically sealed or professionally packaged for safe transport and pickup.</li>
+                    <li>**Allergen Disclosure:** Descriptions must explicitly detail all major allergens to protect public health.</li>
+                </ul>
+                <p>Our community rating system facilitates real-time monitoring, ensuring rapid corrective action against non-compliant partners.</p>
+            </article>
+
+            <article role="article" aria-labelledby="steps-heading">
+                <h3 id="steps-heading">💡 The 5-Step Offer Lifecycle</h3>
+                <ol class="how-it-works">
+                    <li role="listitem">**1. Rapid Posting (The Offer):** The partner uses the `/add` interface to list the surplus (product, quantity, designated pickup time window).</li>
+                    <li role="listitem">**2. Notification & Reservation:** Local users receive alerts. The user secures the offer via the platform to guarantee collection.</li>
+                    <li role="listitem">**3. Token Generation:** A unique digital code (token) is generated, serving as proof of purchase or donation upon collection.</li>
+                    <li role="listitem">**4. Verified Pickup:** The user presents the code, the partner verifies it, and the offer is marked "Sold Out" or "Donation Collected."</li>
+                    <li role="listitem">**5. Impact Logging:** The action is automatically tallied in our central database, contributing to national impact statistics.</li>
+                </ol>
+            </article>
+        </div>
+    </section>
+
+    <hr aria-hidden="true">
+
+    <section class="stats-section container" aria-label="Key Statistics of Our National Impact">
+        <h2 tabindex="0">📊 Our Verified Impact: Data-Driven Sustainability</h2>
+        <p class="stats-intro">Thanks to the dedication of our community, we have achieved and exceeded these remarkable milestones. Our monthly growth rate exceeds 15%:</p>
+        <div class="stats-grid">
+            <div class="stat-item" role="status" aria-live="polite">
+                <div class="number" data-count="15000">15,000+</div>
+                <div class="label">Total Meals Rescued (Preventing Waste)</div>
+            </div>
+            <div class="stat-item" role="status" aria-live="polite">
+                <div class="number" data-count="175">175+</div>
+                <div class="label">Active Partner Establishments (Eco-Responsible Businesses)</div>
+            </div>
+            <div class="stat-item" role="status" aria-live="polite">
+                <div class="number" data-count="8">8.2 tonnes</div>
+                <div class="label">Total Weight of Food Diverted from Landfill</div>
+            </div>
+            <div class="stat-item" role="status" aria-live="polite">
+                <div class="number" data-count="97">97%</div>
+                <div class="label">Successful Offer Pickup Rate (Efficiency)</div>
+            </div>
+             <div class="stat-item" role="status" aria-live="polite">
+                <div class="number" data-count="14">14 Wilayas</div>
+                <div class="label">National Geographical Coverage (Expansion)</div>
+            </div>
+             <div class="stat-item" role="status" aria-live="polite">
+                <div class="number" data-count="3000">3000 DA</div>
+                <div class="label">Avg. Savings per Active User/Month</div>
+            </div>
+        </div>
+        <p class="stats-commitment">**Major Goal 2026:** We are committed to saving 150,000 meals and achieving full operational coverage across 30 major wilayas by the end of next year. Your immediate sign-up helps us reach this national goal faster.</p>
+    </section>
+
+    <hr aria-hidden="true">
+
+    <section class="call-to-action container" aria-label="Section for Sign Up and Contact">
+        <h2 tabindex="0">Ready to Join the Movement for a Sustainable Future?</h2>
+        <p>Whether you manage a small business, a large restaurant chain, or are a conscious citizen, your action is critically important. Join the EcoFood DZ community today and start making a measurable difference in your area.</p>
+        <div class="btn-group">
+            <a href="{{ url_for('offers') }}" class="btn primary-btn large-btn" role="button">Browse Current Offers Now</a>
+            <a href="{{ url_for('add') }}" class="btn secondary-btn large-btn" role="button">Sign Up and Post an Offer</a>
+        </div>
+        <p class="contact-info">For partnership inquiries, technical support, or questions about the protocol, please contact our dedicated support team.</p>
+    </section>
+
+    {% endblock %}

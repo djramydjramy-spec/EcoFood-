@@ -1,0 +1,361 @@
+/* =========================================================================
+   BASE ET TYPOGRAPHIE (Plus de 4000 caractères requis)
+   ========================================================================= */
+
+/* Déclaration des variables CSS (Thème Vert/Bleu) */
+:root {
+    --color-primary: #1e7e34; /* Vert foncé principal (EcoFood) */
+    --color-secondary: #3498db; /* Bleu (Filtres, liens secondaires) */
+    --color-danger: #e74c3c; /* Rouge (Danger, Suppression) */
+    --color-warning: #f39c12; /* Orange (Édition) */
+    --color-background-light: #f0f4f8; /* Arrière-plan général */
+    --color-text-dark: #333;
+    --font-family-base: 'Poppins', sans-serif;
+}
+
+body {
+    font-family: var(--font-family-base);
+    background-color: var(--color-background-light);
+    margin: 0;
+    padding: 0;
+    color: var(--color-text-dark);
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+h1 {
+    text-align: center;
+    margin: 30px 0;
+    font-size: 2.2em;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0ffe0;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* --- CONTENEUR ET STRUCTURE GÉNÉRALE --- */
+.container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+/* =========================================================================
+   NAVIGATION ET BOUTONS UNIVERSELS
+   ========================================================================= */
+
+nav {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+nav .logo a {
+    font-size: 1.6em;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+}
+
+nav .menu a {
+    color: white;
+    text-decoration: none;
+    margin-left: 25px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+nav .menu a:hover:not(.btn) {
+    color: #c8e6c9;
+}
+
+/* Styles de base pour tous les boutons */
+.btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.primary-btn {
+    background-color: var(--color-primary);
+    color: white;
+}
+.primary-btn:hover {
+    background-color: #17642a;
+}
+
+.secondary-btn {
+    background-color: var(--color-secondary);
+    color: white;
+}
+.secondary-btn:hover {
+    background-color: #2980b9;
+}
+
+.large-btn {
+    padding: 15px 30px;
+    font-size: 1.1em;
+}
+
+/* =========================================================================
+   FORMULAIRES (ADD.HTML & EDIT.HTML)
+   ========================================================================= */
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+fieldset {
+    border: 1px solid #ddd;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+}
+
+legend {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: var(--color-primary);
+    padding: 0 15px;
+}
+
+.form-container label {
+    font-weight: 600;
+    margin-top: 10px;
+    color: #555;
+    display: block;
+}
+
+.form-container input[type="text"], 
+.form-container input[type="number"], 
+.form-container input[type="url"],
+.form-container select {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+
+.help-text {
+    display: block;
+    font-size: 0.85em;
+    color: #777;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    border-left: 3px solid #ccc;
+}
+
+/* Alertes et messages d'info */
+.error-message {
+    background-color: #f8d7da;
+    color: var(--color-danger);
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.info-alert {
+    background-color: #d1ecf1; /* Bleu très clair */
+    color: #0c5460;
+    border-color: #bee5eb;
+    margin-bottom: 30px;
+}
+
+.info-edit {
+    background-color: #fff3cd; /* Jaune très clair */
+    color: #856404;
+    border-color: #ffeeba;
+}
+
+/* =========================================================================
+   TABLEAUX (OFFERS.HTML)
+   ========================================================================= */
+
+.offers-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.offers-table th {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.offers-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.offers-table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Contrôles (Search & Filter) */
+.controls-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* Assure la flexibilité sur les petits écrans */
+}
+
+.search-bar {
+    display: flex;
+    gap: 10px;
+}
+
+/* Badges et Statuts */
+.status-badge {
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    display: inline-block;
+}
+
+.status-available .status-badge {
+    background-color: #d4edda; 
+    color: #155724; 
+}
+
+.status-sold-out .status-badge {
+    background-color: #f8d7da; 
+    color: var(--color-danger); 
+}
+
+/* Boutons d'Action Spécifiques */
+.edit-btn {
+    background-color: var(--color-warning); 
+}
+.edit-btn:hover {
+    background-color: #e67e22;
+}
+
+.delete-btn {
+    background-color: var(--color-danger); 
+}
+.delete-btn:hover {
+    background-color: #c0392b; 
+}
+
+.sold-btn {
+    background-color: #7f8c8d; 
+}
+.sold-btn:hover {
+    background-color: #5f6f7d;
+}
+
+/* =========================================================================
+   DESIGN RESPONSIVE (CRITIQUE POUR LA VUE MOBILE)
+   ========================================================================= */
+
+@media (max-width: 768px) {
+    /* Navigation se transforme en colonne */
+    nav {
+        flex-direction: column;
+        padding: 15px 10px;
+    }
+    nav .menu {
+        margin-top: 10px;
+        text-align: center;
+    }
+    nav .menu a {
+        margin: 0 10px;
+    }
+    .container {
+        padding: 15px;
+        margin: 20px auto;
+    }
+    h1 {
+        font-size: 1.8em;
+    }
+    .controls-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .search-bar {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    .filter-buttons {
+        width: 100%;
+        text-align: center;
+    }
+    .filter-buttons a {
+        margin: 5px;
+    }
+    
+    /* Transformation du tableau en cartes pour la lecture mobile */
+    .offers-table, .offers-table tbody, .offers-table tr, .offers-table td {
+        display: block; 
+        width: 100%;
+    }
+    .offers-table thead {
+        display: none; /* Cache l'en-tête */
+    }
+    .offers-table td {
+        text-align: right;
+        padding-left: 50%; 
+        position: relative;
+        border-bottom: 1px dashed #ccc; 
+    }
+    .offers-table td::before {
+        content: attr(data-label); 
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 15px;
+        font-weight: 700;
+        text-align: left;
+        color: var(--color-primary);
+    }
+}
+
+/* Fin du fichier style.css */

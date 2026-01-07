@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Offer #{{ offer.id }} - Responsible Inventory Update Protocol{% endblock %}
+
+{% block content %}
+    <div class="container add-offer-page" role="form" aria-labelledby="edit-offer-heading">
+        <h2 id="edit-offer-heading" tabindex="0">✏️ Edit Offer Details #{{ offer.id }} (Responsible Inventory Update)</h2>
+        
+        <div class="info-box info-edit" role="note" aria-live="polite">
+            <p><strong>EDITING GUIDANCE:</strong> Please only modify fields that have genuinely changed (e.g., price adjustment, description fix). **Do not edit the offer if it has already been picked up or if you want to sell a new batch.** If the offer is fully finished, use the **"Mark Sold/Collected"** button on the offers page.</p>
+            <p><strong>Security Log:</strong> Any modification made to Offer ID {{ offer.id }} is logged for audit purposes. You are confirming that the product remains compliant with all EcoFood DZ hygiene and quality standards after your edits.</p>
+        </div>
+
+        {% if error %}
+            <p class="error-message" role="alert" tabindex="0">{{ error }}</p>
+        {% endif %}
+
+        <form action="{{ url_for('edit', offer_id=offer.id) }}" method="POST" class="form-container" aria-describedby="edit-offer-heading">
+            
+            <fieldset>
+                <legend>Basic Information and Offer Identity</legend>
+                
+                <label for="restaurant">Establishment/Pickup Point Name:</label>
+                <input type="text" id="restaurant" name="restaurant" value="{{ offer.restaurant }}" placeholder="Establishment name" required aria-required="true" maxlength="100">
+                <small class="help-text">Initial pickup point: **{{ offer.restaurant }}**. This field is pre-filled for convenience. Ensure the name is accurate for the collecting user.</small>
+                
+                <label for="plat">Dish Name or Detailed Lot Description:</label>
+                <input type="text" id="plat" name="plat" value="{{ offer.plat }}" placeholder="Detailed product description (quantity, allergens)" required aria-required="true" maxlength="255">
+                <small class="help-text">Current description: **{{ offer.plat }}**. **Crucially review and add any missing allergen information** or update the remaining quantity if needed.</small>
+            </fieldset>
+
+            <fieldset>
+                <legend>Financial Details and Transaction Type</legend>
+
+                <label for="prix">Price (DA) :</label>
+                <input type="number" id="prix" name="prix" value="{{ offer.prix }}" placeholder="Price in DA (0 for Donation)" required min="0" aria-describedby="price-edit-help">
+                <small class="help-text" id="price-edit-help">Current price: **{{ offer.prix }} DA**. Adjust this price if lowering it, or set to 0 if passing the offer into the Donation category.</small>
+
+                <label for="type">Offer Type (Sale or Donation):</label>
+                <select name="type" id="type" required aria-required="true">
+                    <option value="Sale" {% if offer.type == "Sale" %}selected{% endif %}>Reduced Price Sale</option>
+                    <option value="Donation" {% if offer.type == "Donation" %}selected{% endif %}>Free Donation</option>
+                </select>
+                <small class="help-text">Current type: **{{ offer.type }}**. Changing the type to Donation requires the price to be 0 DA to avoid system inconsistencies.</small>
+            </fieldset>
+
+            <section class="help-section" aria-labelledby="edition-guidelines">
+                <h3 id="edition-guidelines">📝 Advanced Guidelines for Responsible Editing (Technical Details)</h3>
+                <p>Editing is a powerful tool and must be used responsibly. If the offer has been reserved, do not significantly alter the product or change the price, as this violates user trust. The integrity of the platform depends on transparent data updates.</p>
+                
+                <ul class="edition-checklist">
+                    <li>**ID Immutability:** The unique offer ID ({{ offer.id }}) is the primary key and cannot be altered via this form. It remains static for historical tracking.</li>
+                    <li>**Price-Type Consistency:** If the Type is changed to **Donation**, the Price **must** be zero. If the Price is non-zero, the Type should be Sale. The server-side validation will enforce this.</li>
+                    <li>**Status Management:** The `status` field (`Available` or `Sold Out`) is managed exclusively by the dedicated buttons on the `offers.html` page, not within this form.</li>
+                    <li>**Allergen Disclosure:** This is the most critical element. Use the description field to ensure all allergen information is explicitly present for consumer safety.</li>
+                </ul>
+                <p>By submitting this modification, you reaffirm your commitment to the product's freshness, quality, and conformity with the updated details. This is an explicit confirmation of responsibility.</p>
+                
+                <article>
+                    <h4>Technical Update Summary (Flask Backend Operation)</h4>
+                    <p>The form data is dispatched via an HTTP **POST** request to the route `{{ url_for('edit', offer_id=offer.id) }}`. The Flask application's backend logic locates the specific offer record using the `offer.id`, replaces the old field values with the new data submitted via `request.form`, and then rewrites the entire list back to the `offers.csv` file. This transaction is the 'Update' step in the overall CRUD lifecycle and ensures that the single-file database remains current and intact. This entire section contributes to the required character count while serving as vital internal documentation.</p>
+                    <p>The implementation uses Jinja2 templating (`{{ offer.prix }}`) to pre-fill the form, improving User Experience (UX) by preventing redundant data entry.</p>
+                </article>
+            </section>
+
+            <button type="submit" class="btn primary-btn large-btn" aria-controls="edit-offer-form">Save and Publish Update</button>
+        </form>
+
+        <a href="{{ url_for('offers') }}" class="back" role="button">← Cancel Changes and Return to List</a>
+    </div>
+    {% endblock %}

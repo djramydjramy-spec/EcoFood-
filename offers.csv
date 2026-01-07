@@ -1,0 +1,9 @@
+id,restaurant,plat,prix,type,status,image
+1,Boulangerie Le Pain d'Or,10 Fresh Baguettes,50,Sale,Available,baguette.jpg
+2,Restaurant La Fourchette,Lot de 5 Plats Végétariens,0,Donation,Available,veg_lot.jpg
+3,Pizzeria Bella Vita,2 Grandes Pizzas Invendues,400,Sale,Available,pizza.jpg
+4,Café du Coin,Boîte de 1kg de Pâtisseries,0,Donation,Sold Out,pastries.jpg
+5,Chez Hicham (Particulier),3 Pains de Mie (non ouverts),150,Sale,Available,pain_mie.jpg
+6,Superette Express,Lot de Fruits Abîmés,0,Donation,Available,fruits_lot.jpg
+7,L'Oscar,Chicken Salad,20,Sale,Available,
+8,Gosra Frite,3 Pains de Mie,20,Sale,Available,

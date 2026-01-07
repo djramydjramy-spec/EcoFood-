@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <!-- ================================================================================== -->
+    <!-- BASE DOCUMENT CONFIGURATION AND UNIVERSAL SEMANTICS -->
+    <!-- ================================================================================== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!-- Dynamic Title for the browser tab -->
+    <title>{% block title %}EcoFood DZ - Food Waste & Solidarity Solution{% endblock %}</title>
+
+    <!-- Block for adding specific HEAD elements -->
+    {% block head_extra %}{% endblock %}
+
+    <!-- ================================================================================== -->
+    <!-- CSS LINKS -->
+    <!-- ================================================================================== -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <!-- External Font (Poppins) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Styles spécifiques pour le lien de connexion */
+        .auth-status {
+            font-size: 0.9em;
+            margin-right: 15px;
+            color: #c8e6c9;
+        }
+        /* Universal structural styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* Utilisez des variables CSS si elles sont définies dans style.css, sinon utilisez les couleurs en dur */
+            background-color: #f0f4f8; /* Placeholder for var(--color-background-light) */
+            color: #333; /* Placeholder for var(--color-text-dark) */
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background-color: #1e7e34;
+            color: white;
+            padding: 15px 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            display: flex; /* Assurez-vous que la nav est flex pour le logo/menu */
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav .logo a {
+            font-size: 1.6em;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+        nav .menu {
+            display: flex; /* Assurez-vous que le menu est flex */
+            align-items: center;
+        }
+        main {
+            min-height: 85vh; 
+            padding-bottom: 70px; 
+        }
+    </style>
+</head>
+<body>
+    <!-- ========================================================================= -->
+    <!-- 1. Universal Navigation Bar (Logic intégrée) -->
+    <!-- ========================================================================= -->
+    <nav role="navigation" aria-label="Main site navigation menu for EcoFood DZ">
+        <div class="logo">
+            <a href="{{ url_for('index') }}" aria-label="Go to the EcoFood DZ homepage">EcoFood DZ</a>
+        </div>
+        <div class="menu">
+            <a href="{{ url_for('index') }}" role="menuitem" class="nav-link">Home</a>
+            <a href="{{ url_for('offers') }}" role="menuitem" class="nav-link">Current Offers</a>
+
+            <!-- LOGIQUE D'AUTHENTIFICATION AVEC LIEN ENREGISTREMENT -->
+            {% if current_user.is_authenticated %}
+                <!-- Si connecté -->
+                <span class="auth-status">Logged in as: <b>{{ current_user.username }}</b></span>
+                <a href="{{ url_for('add') }}" class="btn primary-btn nav-link" role="menuitem" title="Post a new surplus offer">Post an Offer</a>
+                <a href="{{ url_for('logout') }}" class="btn delete-btn nav-link" role="menuitem" title="Log out of your partner account">Logout</a>
+            {% else %}
+                <!-- Si déconnecté, afficher Inscription et Connexion -->
+                <a href="{{ url_for('login') }}" class="btn secondary-btn nav-link" role="menuitem" title="Login to your partner account">Partner Login</a>
+                <a href="{{ url_for('register') }}" class="btn primary-btn nav-link" role="menuitem" title="Create a new partner account">Register (New Account)</a>
+            {% endif %}
+            <!-- FIN DE LA LOGIQUE D'AUTHENTIFICATION -->
+            
+        </div>
+    </nav>
+
+    <!-- ========================================================================= -->
+    <!-- 2. Main Page Content (Dynamic Insertion Area) -->
+    <!-- ========================================================================= -->
+    <main role="main" id="site-content" aria-label="Main and dynamic content of the anti-waste application">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- ========================================================================= -->
+    <!-- 3. Universal Footer -->
+    <!-- ========================================================================= -->
+    <footer role="contentinfo" aria-labelledby="footer-heading">
+        <p id="footer-heading" class="visually-hidden">Legal, copyright, and contact information</p>
+        <div class="footer-content container">
+            <p>&copy; 2025 EcoFood DZ. All rights reserved. | Proudly committed to Sustainable Development and Food Security in Algeria.</p>
+            <div class="footer-links">
+                <a href="/mentions-legales" role="link">Legal Notice</a> | 
+                <a href="/politique-confidentialite" role="link">Privacy Policy and Data Protection</a> | 
+                <a href="/contact" role="link">Contact Support & Partnerships</a>
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>
